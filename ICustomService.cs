@@ -3,6 +3,8 @@ namespace Nop.Services
     public interface ICustomService
     {
         InjectType Inject { get; set; }
+        int Order { get; set; }
+
     }
     public enum InjectType
     {
