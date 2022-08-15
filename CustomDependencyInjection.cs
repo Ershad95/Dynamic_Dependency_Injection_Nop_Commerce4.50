@@ -19,7 +19,10 @@
             //-------------find Services that inheriance of ICustomService-------------
             var types = asm.DefinedTypes.Where(x => IsSubInterface(x, typeof(ICustomService)));
             //-----------Get All Custom Service Classess-------
-            var allRelatedClassServices = types.Where(x => x.IsClass);
+            var allRelatedClassServices = types
+                .Where(x => x.IsClass)
+                .OrderBy(x=>(Int32)x.GetProperty("Order")
+                .GetValue(Activator.CreateInstance(x), null));
             //-----------Get All Custom Service Interfaces-------
             var allRelatedInterfaceServices = types.Where(x => x.IsInterface);
             //-----------Matche Class Services To Related Interface Services-------
