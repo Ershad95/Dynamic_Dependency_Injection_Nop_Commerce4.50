@@ -1,10 +1,21 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
 namespace Nop.Services
 {
     public interface ICustomService
     {
-        InjectType Inject { get; set; }
-        int Order { get; set; }
-
+        protected InjectType Inject { get;  }
+        protected int Order { get; }
+        protected ImplementationType implementationType { get; }
+    }
+    public enum ImplementationType
+    {
+        WithInterface = 0,
+        WithoutInterface = 1
     }
     public enum InjectType
     {
