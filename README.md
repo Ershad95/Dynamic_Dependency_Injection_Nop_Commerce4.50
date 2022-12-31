@@ -43,23 +43,25 @@
 حالا به چه روشی تزریق کنیم ؟؟؟ 
 یادتونه که یک prop داشتیم به اسم Inject وقتشه ازش استفاده کنیم 
 
-######                var InjectValue = (InjectType)classService.GetProperty("Inject")
-######                   .GetValue(Activator.CreateInstance(classService), null);
-######                //----------finally Add Custom Service To Service Collection-----------
-######               switch (InjectValue)
-######                {
-######                    case InjectType.Scopped:
-######                        services.AddScoped(interfaceService, classService);
-######                        break;
-######                    case InjectType.Transit:
-######                        services.AddTransient(interfaceService, classService);
-######                        break;
- ######                   case InjectType.SingleTon:
-######                        services.AddSingleton(interfaceService, classService);
-######                        break;
-######                    default:
-######                        break;
-######                }
+<pre>
+                var InjectValue = (InjectType)classService.GetProperty("Inject")
+                   .GetValue(Activator.CreateInstance(classService), null);
+                //----------finally Add Custom Service To Service Collection-----------
+               switch (InjectValue)
+                {
+                    case InjectType.Scopped:
+                        services.AddScoped(interfaceService, classService);
+                        break;
+                    case InjectType.Transit:
+                        services.AddTransient(interfaceService, classService);
+                        break;
+                    case InjectType.SingleTon:
+                        services.AddSingleton(interfaceService, classService);
+                        break;
+                    default:
+                        break;
+                }
+</per>
  
 یادتون باشه این کلاس صرفا یکبار در حیات نرم افزار اجرا میشه و قرار نیست در طی جرخف نرم افزار این متذ با کدهایی که گقتم اجرا بشن پس نگران هزینه بربودن یا اشغال شدن منابع سیستمی نباشید :)
 
