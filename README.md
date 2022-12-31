@@ -44,23 +44,23 @@
 یادتونه که یک prop داشتیم به اسم Inject وقتشه ازش استفاده کنیم 
 
 <pre>
-                var InjectValue = (InjectType)classService.GetProperty("Inject")
-                   .GetValue(Activator.CreateInstance(classService), null);
-                //----------finally Add Custom Service To Service Collection-----------
-               switch (InjectValue)
-                {
-                    case InjectType.Scopped:
-                        services.AddScoped(interfaceService, classService);
-                        break;
-                    case InjectType.Transit:
-                        services.AddTransient(interfaceService, classService);
-                        break;
-                    case InjectType.SingleTon:
-                        services.AddSingleton(interfaceService, classService);
-                        break;
-                    default:
-                        break;
-                }
+ var InjectValue = (InjectType)classService.GetProperty("Inject")
+                .GetValue(Activator.CreateInstance(classService), null);
+            //----------finally Add Custom Service To Service Collection-----------
+            switch (InjectValue)
+            {
+                case InjectType.Scopped:
+                    services.AddScoped(interfaceService, classService);
+                    break;
+                case InjectType.Transit:
+                    services.AddTransient(interfaceService, classService);
+                    break;
+                case InjectType.SingleTon:
+                    services.AddSingleton(interfaceService, classService);
+                    break;
+                default:
+                    break;
+            }
 </pre>
  
 
