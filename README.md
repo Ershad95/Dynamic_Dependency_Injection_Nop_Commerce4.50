@@ -14,26 +14,32 @@
  باید یه کلاس جدید به اسم مثلا CustomDependencyInjection ایجاد کنیم با این تفاوت که حتما از کلاس NopStartup ارث بری کرده باشه و نکته خیلی مهم این باید متدی به اسم ConfigureServices رو override کنه 
  حالا داخل متدی که گقتم بایدشروع کنیم به جادو گری!!!
 ## تحلیل کدهای متد ConfigureServices :
-######   //-------------Get All Services-------------
-######            var asm = AppDomain.CurrentDomain
-######                 .GetAssemblies()
-######                 .Single(x => x.FullName.Contains("Nop.Services"));
+<pre>
+ //-------------Get All Services-------------
+            var asm = AppDomain.CurrentDomain
+                .GetAssemblies()
+                .Single(x => x.FullName.Contains("Nop.Services"));
+</pre>
 
  در این کد اسمبلی قسمت Nop.Service برمیداریم چرا؟؟ چون تمام سرویس هایی که می نویسیم در این قسمت قرار داره اگر خدایی نکرده خواستید سرویس هاتون رو جای دیگه ای بنویسد باید اسم Nop.Service به چیزی که میخوایید تغییر بدید من تطبق استاندارد جلو رفتم پس شما هم قانون مند باشید !
-######  //-------------find Services that inheriance of ICustomService-------------
-######            var types = asm.DefinedTypes.Where(x => IsSubInterface(x, typeof(ICustomService))); 
- یادتونه گقتم باید مشخص بشه چه سرویس هایی رو ما مشخص کردیم ! اینجا وقتشه ازش استفاده کنیم و سرویس های خودمون رو تفکیک کنیم
-######  //-----------Get All Custom Service Classess-------
-######            var allRelatedClassServices = types.Where(x => x.IsClass);
-######            //-----------Get All Custom Service Interfaces-------
-######            var allRelatedInterfaceServices = types.Where(x => x.IsInterface);
- تو این مرحله تمام کلاس ایمنترفیس هایی که شخصی سازی کردیم رو به دست میاریم 
-###### //-----------Matche Class Services To Related Interface Services-------
-######            foreach (var classService in allRelatedClassServices)
-######            {
-######                //-----------get related interface for service class-----------
-######                var interfaceService = allRelatedInterfaceServices.Single(x => x.Name == $"I{classService.Name}");           
-######            }
+
+<pre>
+//-------------find Services that inheriance of ICustomService-------------
+            var types = asm.DefinedTypes.Where(x => IsSubInterface(x, typeof(ICustomService))); 
+یادتونه گقتم باید مشخص بشه چه سرویس هایی رو ما مشخص کردیم ! اینجا وقتشه ازش استفاده کنیم و سرویس های خودمون رو تفکیک کنیم
+  //-----------Get All Custom Service Classess-------
+            var allRelatedClassServices = types.Where(x => x.IsClass);
+            //-----------Get All Custom Service Interfaces-------
+            var allRelatedInterfaceServices = types.Where(x => x.IsInterface);
+    تو این مرحله تمام کلاس ایمنترفیس هایی که شخصی سازی کردیم رو به دست میاریم 
+ //-----------Matche Class Services To Related Interface Services-------
+           foreach (var classService in allRelatedClassServices)
+            {
+               //-----------get related interface for service class-----------
+                var interfaceService = allRelatedInterfaceServices.Single(x => x.Name == $"I{classService.Name}");           
+            }
+</pre>
+
  اینم از مرحله آخر یعنی ارتباط دادن سرویس ها کلاس و اینترفیس های کلاس 
 ## قانون سوم :  
 کلاس ها و اینترفیس های سرویس باید یک نام گذاری واحد داشته باشند برای این قانون از استاندارد خود Nop که خیلی منطقی هم هست استفاده کردم یعنی :
